@@ -27,7 +27,7 @@ class FileTest extends TestCase
         $folder->addFile($file);
 
         $this->assertEquals(1, $folder->totalFiles());
-        $this->assertEquals($folder->id(), $file->parent());
+        $this->assertEquals($folder, $file->parent());
     }
 
     /** @test */

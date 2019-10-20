@@ -24,7 +24,7 @@ class FolderTest extends TestCase
         $vehiclesFolder->addFolder($carFolder);
 
         $this->assertEquals(1, $vehiclesFolder->totalFolders());
-        $this->assertEquals($vehiclesFolder->id(), $carFolder->parent());
+        $this->assertEquals($vehiclesFolder, $carFolder->parent());
     }
 
     /** @test */

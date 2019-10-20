@@ -11,7 +11,7 @@ class Folder
     /** @var FolderId */
     private $id;
 
-    /** @var FolderId */
+    /** @var Folder */
     private $parent;
 
     /** @var FolderName */
@@ -26,6 +26,7 @@ class Folder
     public function __construct(FolderId $id, FolderName $name)
     {
         $this->id = $id;
+        $this->parent = null;
         $this->name = $name;
         $this->folders = array();
         $this->files = array();
@@ -49,7 +50,7 @@ class Folder
         return $this->name;
     }
 
-    public function parent(): FolderId
+    public function parent(): ?Folder
     {
         return $this->parent;
     }
@@ -74,7 +75,7 @@ class Folder
         }
 
         $this->folders[$child->id()->value()] = $child;
-        $child->setParent($this->id());
+        $child->setParent($this);
     }
 
     public function addFile(File $file)
@@ -88,7 +89,7 @@ class Folder
 
         $this->files[$file->id()->value()] = $file;
         // TODO - setParent should be a private method in File class
-        $file->setParent($this->id());
+        $file->setParent($this);
     }
 
     public function totalFolders()
@@ -102,9 +103,9 @@ class Folder
     }
 
     /** This method is only used when a child folder is added into parent folder to ensure the new relation
-     * @param FolderId $parent
+     * @param Folder $parent
      */
-    private function setParent(FolderId $parent): void
+    private function setParent(Folder $parent): void
     {
         $this->parent = $parent;
     }
