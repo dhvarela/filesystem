@@ -7,9 +7,11 @@ use PHPUnit\Framework\TestCase;
 class FolderTest extends TestCase
 {
     /** @test */
-    public function test_should_instantiate_an_empty_folder_with_an_id(): void
+    public function test_should_instantiate_an_empty_folder_with_an_id_and_name(): void
     {
-        $cart = Folder::init();
-        $this->assertNotEmpty($cart->id());
+        $folder = Folder::init('lorem');
+
+        $this->assertNotEmpty($folder->id());
+        $this->assertEquals('lorem', $folder->getName());
     }
 }
