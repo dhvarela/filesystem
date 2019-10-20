@@ -17,11 +17,15 @@ class Folder
     /** @var array */
     private $folders;
 
+    /** @var array */
+    private $files;
+
     public function __construct(FolderId $id, FolderName $name)
     {
         $this->id = $id;
         $this->name = $name;
         $this->folders = array();
+        $this->files = array();
     }
 
     public static function init($name)
@@ -52,6 +56,11 @@ class Folder
         return $this->folders;
     }
 
+    public function files(): array
+    {
+        return $this->files;
+    }
+
     public function addFolder(Folder $child)
     {
         /** @var Folder $aFolder */
@@ -68,6 +77,11 @@ class Folder
     public function totalFolders()
     {
         return count($this->folders);
+    }
+
+    public function totalFiles()
+    {
+        return count($this->files);
     }
 
     /** This method is only used when a child folder is added into parent folder to ensure the new relation
