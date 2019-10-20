@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace App\Filesystem\Domain\Model\File;
 
-use App\Filesystem\Domain\Model\Folder\FileContent;
-use App\Filesystem\Domain\Model\Folder\FileName;
-use App\Filesystem\Domain\Model\Folder\Folder;
 use App\Filesystem\Domain\Model\Folder\FolderId;
 
 class File
@@ -58,10 +55,10 @@ class File
     /**
      * This method should be private to avoid data inconsistency. We should use a Domain Event in addFile method from
      * Folder class to fix it.
-     * @param FolderId $folder
+     * @param FolderId $parent
      */
-    public function setParent(FolderId $folder)
+    public function setParent(FolderId $parent)
     {
-        $this->parent = $folder;
+        $this->parent = $parent;
     }
 }

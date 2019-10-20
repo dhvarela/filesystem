@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Filesystem\Domain\Model\Folder;
 
 use App\Filesystem\Domain\Model\File\File;
+use App\Filesystem\Domain\Model\File\FileNameAlreadyExists;
 
 class Folder
 {
@@ -78,6 +79,13 @@ class Folder
 
     public function addFile(File $file)
     {
+        /** @var File $aFile */
+        foreach($this->files as $aFile) {
+            if ($aFile->name()->value() === $file->name()->value()) {
+                FileNameAlreadyExists::throwBecauseOf($file->name());
+            }
+        }
+
         $this->files[$file->id()->value()] = $file;
         // TODO - setParent should be a private method in File class
         $file->setParent($this->id());

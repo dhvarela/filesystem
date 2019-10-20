@@ -38,7 +38,5 @@ class FolderTest extends TestCase
 
         $vehiclesFolder->addFolder($carFolder1);
         $vehiclesFolder->addFolder($carFolder2);
-
-        echo "total folders " . $vehiclesFolder->totalFolders();
     }
 }

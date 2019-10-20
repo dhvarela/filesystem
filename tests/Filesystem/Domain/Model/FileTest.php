@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Filesystem\Domain\Model\File\File;
 use App\Filesystem\Domain\Model\Folder\Folder;
+use App\Filesystem\Domain\Model\File\FileNameAlreadyExists;
 use PHPUnit\Framework\TestCase;
 
 class FileTest extends TestCase
@@ -27,5 +28,18 @@ class FileTest extends TestCase
 
         $this->assertEquals(1, $folder->totalFiles());
         $this->assertEquals($folder->id(), $file->parent());
+    }
+
+    /** @test */
+    public function test_should_fail_adding_an_existing_file_name(): void
+    {
+        $folder = Folder::init('books');
+        $file1 = File::init('Alfa', 'lorem ipsum dolor sit amet');
+        $file2 = File::init('Alfa', 'lorem ipsum dolor sit amet');
+
+        $this->expectException(FileNameAlreadyExists::class);
+
+        $folder->addFile($file1);
+        $folder->addFile($file2);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace App\Filesystem\Domain\Model\Folder;
+namespace App\Filesystem\Domain\Model\File;
 
 final class FileContent
 {
