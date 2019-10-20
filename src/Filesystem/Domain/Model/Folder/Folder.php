@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Filesystem\Domain\Model\Folder;
 
+use App\Filesystem\Domain\Model\File\File;
+
 class Folder
 {
     /** @var FolderId */
@@ -72,6 +74,13 @@ class Folder
 
         $this->folders[$child->id()->value()] = $child;
         $child->setParent($this->id());
+    }
+
+    public function addFile(File $file)
+    {
+        $this->files[$file->id()->value()] = $file;
+        // TODO - setParent should be a private method in File class
+        $file->setParent($this->id());
     }
 
     public function totalFolders()
