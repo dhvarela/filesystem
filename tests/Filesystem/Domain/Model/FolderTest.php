@@ -12,6 +12,17 @@ class FolderTest extends TestCase
         $folder = Folder::init('lorem');
 
         $this->assertNotEmpty($folder->id());
-        $this->assertEquals('lorem', $folder->getName());
+        $this->assertEquals('lorem', $folder->name());
+    }
+
+    /** @test */
+    public function test_should_create_a_new_folder_with_parent_folder(): void
+    {
+        $vehiclesFolder = Folder::init('vehicles');
+        $carFolder = Folder::init('vehicles');
+        $vehiclesFolder->addFolder($carFolder);
+
+        $this->assertEquals(1, $vehiclesFolder->totalFolders());
+        $this->assertEquals($vehiclesFolder, $carFolder->getParent());
     }
 }
