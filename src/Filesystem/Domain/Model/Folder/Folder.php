@@ -8,13 +8,13 @@ class Folder
     /** @var FolderId */
     private $id;
 
-    /** @var Folder */
+    /** @var FolderId */
     private $parent;
 
     /** @var FolderName */
     private $name;
 
-    /** @var Folder array */
+    /** @var array */
     private $folders;
 
     public function __construct(FolderId $id, FolderName $name)
@@ -42,15 +42,27 @@ class Folder
         return $this->name;
     }
 
-    public function getParent(): Folder
+    public function parent(): FolderId
     {
         return $this->parent;
     }
 
+    public function folders(): array
+    {
+        return $this->folders;
+    }
+
     public function addFolder(Folder $child)
     {
-        $child->setParent($this);
+        /** @var Folder $aFolder */
+        foreach ($this->folders as $aFolder) {
+            if ($aFolder->name()->value() === $child->name()->value()) {
+                FolderNameAlreadyExists::throwBecauseOf($child->name());
+            }
+        }
+
         $this->folders[$child->id()->value()] = $child;
+        $child->setParent($this->id());
     }
 
     public function totalFolders()
@@ -59,9 +71,9 @@ class Folder
     }
 
     /** This method is only used when a child folder is added into parent folder to ensure the new relation
-     * @param Folder $parent
+     * @param FolderId $parent
      */
-    private function setParent(Folder $parent): void
+    private function setParent(FolderId $parent): void
     {
         $this->parent = $parent;
     }
