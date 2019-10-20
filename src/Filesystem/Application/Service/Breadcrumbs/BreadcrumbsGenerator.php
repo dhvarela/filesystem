@@ -14,11 +14,13 @@ class BreadcrumbsGenerator
         $breadcrumbs = '';
         $currentFolder = $folder;
 
-        while($currentFolder->parent() !== null) {
+        $i = 0;
+        while($currentFolder->parent() !== null && $i < self::MAX_ITEMS) {
 
-            $breadcrumbs = " > " . $folder->name() . $breadcrumbs;
-            $currentFolder = $folder->parent();
+            $breadcrumbs = " > " . $currentFolder->name() . $breadcrumbs;
+            $currentFolder = $currentFolder->parent();
 
+            $i++;
         }
 
         $breadcrumbs = $currentFolder->name() . $breadcrumbs;
